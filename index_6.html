@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selector Pie — Music Production, Beats & Riddims from Trinidad & Tobago</title>
+<meta name="description" content="Selector Pie: music producer, composer, and sound designer from Trinidad & Tobago. Soca, Dancehall, Bouyon, Shatta, EDM and Caribbean Fusion riddims, instrumentals, mixing and mastering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0D12;
+    --bg-raised:#11151C;
+    --bg-raised-2:#161B23;
+    --paper:#F5F1E8;
+    --smoke:#9AA1AC;
+    --gold:#F2A93B;
+    --magenta:#FF3D7F;
+    --teal:#28D9C8;
+    --line: rgba(245,241,232,0.12);
+    --line-strong: rgba(245,241,232,0.22);
+    --maxw: 1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--paper);
+    font-family:'Sora',sans-serif; line-height:1.6; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Anton',sans-serif; text-transform:uppercase; letter-spacing:0.01em; margin:0; font-weight:400;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    font-family:'Space Mono',monospace; text-transform:uppercase; letter-spacing:0.18em;
+    font-size:12px; display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:22px; height:2px; background:currentColor; display:inline-block;}
+  section{position:relative; padding:120px 0;}
+  @media (max-width:640px){ section{padding:80px 0;} }
+
+  /* ---------- Atmosphere ---------- */
+  .noise{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.05;
+    mix-blend-mode:overlay;
+  }
+  .vignette{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(0,0,0,0.55) 100%);
+  }
+  main, header, footer{position:relative; z-index:3;}
+
+  /* ---------- EQ bars (signature motif) ---------- */
+  .eq{display:flex; align-items:flex-end; gap:3px; height:100%; width:100%;}
+  .eq .bar{flex:1; border-radius:2px 2px 0 0; transform-origin:bottom; min-width:2px;}
+  @media (prefers-reduced-motion:no-preference){
+    .eq .bar{animation:eqPulse 1.6s ease-in-out infinite;}
+  }
+  @keyframes eqPulse{
+    0%, 100%{ transform:scaleY(0.25); }
+    50%{ transform:scaleY(1); }
+  }
+  .divider{height:46px; opacity:0.35; margin:0 auto; max-width:var(--maxw);}
+
+  /* ---------- Header / nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:18px 24px; display:flex; align-items:center; justify-content:space-between;
+    transition:background .3s ease, backdrop-filter .3s ease, padding .3s ease;
+  }
+  header.scrolled{ background:rgba(10,13,18,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding:14px 24px; }
+  .brand{font-family:'Anton',sans-serif; font-size:20px; letter-spacing:0.04em; text-transform:uppercase;}
+  nav{display:flex; align-items:center; gap:28px;}
+  nav a{font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--smoke); transition:color .2s ease;}
+  nav a:hover{color:var(--paper);}
+  .nav-links{display:flex; gap:28px;}
+  .menu-toggle{display:none; background:none; border:1px solid var(--line-strong); color:var(--paper); width:38px; height:38px; border-radius:8px; cursor:pointer; flex-direction:column; align-items:center; justify-content:center; gap:4px;}
+  .menu-toggle span{width:16px; height:2px; background:currentColor; display:block;}
+  .mobile-panel{
+    position:fixed; top:64px; left:0; right:0; background:var(--bg-raised);
+    border-bottom:1px solid var(--line); z-index:49; padding:16px 24px;
+    display:flex; flex-direction:column; gap:16px; transform:translateY(-12px); opacity:0;
+    pointer-events:none; transition:transform .2s ease, opacity .2s ease;
+  }
+  .mobile-panel.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
+  .mobile-panel a{font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper); padding:6px 0;}
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .menu-toggle{display:flex;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding-top:140px; padding-bottom:60px; position:relative; overflow:hidden;
+  }
+  .hero-eq{ position:absolute; left:0; right:0; bottom:0; height:38vh; opacity:0.55; z-index:0;
+    mask-image:linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  }
+  .hero-content{position:relative; z-index:2;}
+  .hero h1{
+    font-size:clamp(52px, 11vw, 132px); line-height:0.92; color:var(--paper);
+  }
+  .hero h1 .accent{ color:var(--gold); }
+  .hero-sub{
+    max-width:560px; font-size:clamp(16px,2vw,19px); color:var(--smoke); margin:24px 0 40px;
+  }
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:16px 28px; border-radius:6px; display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--line-strong); transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-solid{ background:var(--gold); color:#1a1306; border-color:var(--gold); }
+  .btn-solid:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(242,169,59,0.28); }
+  .btn-ghost{ color:var(--paper); }
+  .btn-ghost:hover{ background:rgba(245,241,232,0.06); transform:translateY(-2px); }
+  .scroll-cue{
+    position:absolute; bottom:28px; left:24px; font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.12em; color:var(--smoke); text-transform:uppercase; display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue .line{width:1px; height:28px; background:var(--line-strong); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{content:''; position:absolute; top:0; left:0; width:100%; height:40%; background:var(--gold);
+    animation:scrollDrip 1.8s ease-in-out infinite;}
+  @keyframes scrollDrip{ 0%{transform:translateY(-100%);} 100%{transform:translateY(250%);} }
+
+  /* ---------- Reveal ---------- */
+  [data-reveal]{ opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  [data-reveal].in-view{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){
+    [data-reveal]{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:64px; align-items:start; }
+  .about h2{ font-size:clamp(32px,4.4vw,52px); color:var(--gold); margin-bottom:28px; max-width:640px; }
+  .about p{ color:var(--smoke); font-size:16px; max-width:600px; margin:0 0 18px; }
+  .label-card{
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:28px;
+    position:relative;
+  }
+  .label-card::before{
+    content:''; position:absolute; inset:10px; border:1px dashed var(--line-strong); border-radius:6px; pointer-events:none;
+  }
+  .label-card .quote{ font-family:'Anton',sans-serif; font-size:22px; line-height:1.25; color:var(--paper); text-transform:none; }
+  .label-card .meta{ margin-top:18px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--gold); text-transform:uppercase; }
+  @media (max-width:820px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Genres ---------- */
+  .genres h2{ color:var(--magenta); font-size:clamp(32px,4.4vw,52px); margin-bottom:48px; max-width:680px; }
+  .sticker-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; }
+  .sticker{
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:22px 20px;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .sticker:nth-child(odd){ transform:rotate(-1.4deg); }
+  .sticker:nth-child(even){ transform:rotate(1.2deg); }
+  .sticker:hover{ transform:rotate(0deg) translateY(-4px); border-color:var(--magenta); }
+  .sticker .g-name{ font-family:'Anton',sans-serif; font-size:20px; color:var(--paper); letter-spacing:0.02em; }
+  .sticker .g-desc{ font-family:'Space Mono',monospace; font-size:12px; color:var(--smoke); margin-top:10px; line-height:1.5; }
+  @media (max-width:820px){ .sticker-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .sticker-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Services ---------- */
+  .services h2{ color:var(--teal); font-size:clamp(32px,4.4vw,52px); margin-bottom:48px; }
+  .service-row{
+    display:grid; grid-template-columns:260px 1fr; gap:32px; padding:24px 0; border-top:1px solid var(--line);
+    border-left:2px solid transparent; transition:border-color .2s ease, padding-left .2s ease;
+  }
+  .service-row:hover{ border-left-color:var(--teal); padding-left:14px; }
+  .service-row:last-child{ border-bottom:1px solid var(--line); }
+  .service-row .s-name{ font-family:'Space Mono',monospace; text-transform:uppercase; letter-spacing:0.08em; font-size:14px; color:var(--paper); }
+  .service-row .s-desc{ color:var(--smoke); font-size:15px; }
+  @media (max-width:680px){ .service-row{grid-template-columns:1fr; gap:8px;} }
+
+  /* ---------- Catalog ---------- */
+  .catalog h2{ color:var(--gold); font-size:clamp(32px,4.4vw,52px); margin-bottom:12px; }
+  .catalog-sub{ color:var(--smoke); margin-bottom:48px; max-width:520px; }
+  .track{
+    display:grid; grid-template-columns:40px 44px 1fr auto auto; align-items:center; gap:18px;
+    padding:18px 16px; border-radius:10px; border:1px solid transparent;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .track:hover{ background:var(--bg-raised); border-color:var(--line); }
+  .track + .track{ margin-top:6px; }
+  .t-num{ font-family:'Space Mono',monospace; color:var(--smoke); font-size:13px; }
+  .t-play{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line-strong); background:transparent;
+    color:var(--paper); cursor:pointer; display:flex; align-items:center; justify-content:center; flex:none;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .t-play:hover{ border-color:var(--gold); }
+  .t-play.playing{ background:var(--gold); border-color:var(--gold); color:#1a1306; }
+  .t-play svg{ width:16px; height:16px; }
+  .t-info .t-title{ font-size:17px; font-weight:600; }
+  .t-info .t-meta{ font-family:'Space Mono',monospace; font-size:11px; color:var(--smoke); letter-spacing:0.06em; margin-top:4px; text-transform:uppercase; }
+  .t-genre{
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--gold); border:1px solid rgba(242,169,59,0.35); border-radius:20px; padding:4px 10px; white-space:nowrap;
+  }
+  .t-leases{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .lease-btn{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.04em; padding:9px 12px; border-radius:6px;
+    border:1px solid var(--line-strong); color:var(--paper); white-space:nowrap; transition:background .2s ease, border-color .2s ease;
+  }
+  .lease-btn:hover{ background:var(--bg-raised-2); border-color:var(--gold); }
+  @media (max-width:900px){
+    .track{ grid-template-columns:32px 40px 1fr; row-gap:10px; }
+    .t-genre, .t-leases{ grid-column:1 / -1; justify-content:flex-start; margin-left:58px; }
+  }
+
+  /* ---------- Platforms ---------- */
+  .platforms h2{ color:var(--teal); font-size:clamp(32px,4.4vw,52px); margin-bottom:40px; }
+  .platform-row{ display:flex; flex-wrap:wrap; gap:14px; }
+  .platform-btn{
+    display:flex; align-items:center; gap:12px; padding:16px 22px; border-radius:8px;
+    border:1px solid var(--line-strong); font-family:'Space Mono',monospace; font-size:13px;
+    letter-spacing:0.06em; text-transform:uppercase; transition:transform .2s ease, border-color .2s ease;
+  }
+  .platform-btn:hover{ transform:translateY(-3px); border-color:var(--teal); }
+  .platform-btn svg{ width:18px; height:18px; flex:none; }
+
+  /* ---------- Contact ---------- */
+  .contact{ text-align:left; }
+  .contact h2{ color:var(--magenta); font-size:clamp(36px,5.6vw,68px); max-width:760px; }
+  .contact p{ color:var(--smoke); max-width:520px; margin:24px 0 36px; font-size:16px; }
+  .contact-quote{ margin-top:64px; font-family:'Anton',sans-serif; text-transform:none; font-size:clamp(18px,2.4vw,24px); color:var(--paper); max-width:640px; }
+  .contact-quote span{ color:var(--gold); }
+
+  footer{ padding:48px 0; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row .brand{ font-size:16px; }
+  .footer-meta{ font-family:'Space Mono',monospace; font-size:11px; color:var(--smoke); letter-spacing:0.08em; text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<svg class="noise" aria-hidden="true">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+<div class="vignette" aria-hidden="true"></div>
+
+<header id="siteHeader">
+  <a class="brand" href="#top">Selector Pie</a>
+  <nav class="nav-links">
+    <a href="#about">About</a>
+    <a href="#genres">Genres</a>
+    <a href="#services">Services</a>
+    <a href="#catalog">Catalog</a>
+    <a href="#listen">Listen</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#about">About</a>
+  <a href="#genres">Genres</a>
+  <a href="#services">Services</a>
+  <a href="#catalog">Catalog</a>
+  <a href="#listen">Listen</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-eq" id="heroEq"></div>
+    <div class="wrap hero-content">
+      <div class="eyebrow" style="color:var(--gold);">Trinidad &amp; Tobago — Sound System</div>
+      <h1>Selector<br><span class="accent">Pie</span></h1>
+      <p class="hero-sub">Caribbean-inspired riddims for artists, DJs, content creators, and music libraries. Soca, Dancehall, Bouyon, Shatta, and EDM, mixed and mastered for the world.</p>
+      <div class="cta-row">
+        <a href="#catalog" class="btn btn-solid">Browse the Catalog</a>
+        <a href="#listen" class="btn btn-ghost">Stream Everywhere</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span class="line"></span>Scroll</div>
+  </section>
+
+  <div class="divider" id="div1"></div>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div data-reveal>
+          <div class="eyebrow" style="color:var(--gold);">The Sound</div>
+          <h2>From Carnival Anthems To Cinematic Electronics</h2>
+          <p>Selector Pie is a music producer, composer, and sound designer from Trinidad &amp; Tobago, known for crafting energetic Caribbean-inspired productions that blend Soca, Dancehall, Bouyon, EDM, and Shatta influences.</p>
+          <p>Specializing in original riddims, instrumentals, remixes, and custom productions, Selector Pie delivers powerful rhythms, memorable melodies, and professional-quality sound for artists, DJs, content creators, and music libraries worldwide.</p>
+          <p>Driven by innovation and a deep love for music production, the catalog keeps growing, connecting Caribbean culture with international audiences, one riddim at a time.</p>
+        </div>
+        <div class="label-card" data-reveal>
+          <div class="quote">"Creating music that moves people, from the Caribbean to the world." 🌎🎵</div>
+          <div class="meta">— Selector Pie</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" id="div2"></div>
+
+  <section class="genres" id="genres">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow" style="color:var(--magenta);">Genres</div>
+        <h2>Where The Riddim Comes From</h2>
+      </div>
+      <div class="sticker-grid" data-reveal>
+        <div class="sticker"><div class="g-name">Soca</div><div class="g-desc">Carnival's heartbeat, full throttle.</div></div>
+        <div class="sticker"><div class="g-name">Dancehall</div><div class="g-desc">Heavy low-end, yard energy.</div></div>
+        <div class="sticker"><div class="g-name">Bouyon</div><div class="g-desc">Dominica's jump-up, turned all the way up.</div></div>
+        <div class="sticker"><div class="g-name">Shatta</div><div class="g-desc">Hard-hitting, modern Caribbean riddim.</div></div>
+        <div class="sticker"><div class="g-name">EDM</div><div class="g-desc">Festival-size drops, global reach.</div></div>
+        <div class="sticker"><div class="g-name">Caribbean Fusion</div><div class="g-desc">Where all of the above collide.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" id="div3"></div>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow" style="color:var(--teal);">Services</div>
+        <h2>Studio Menu</h2>
+      </div>
+      <div data-reveal>
+        <div class="service-row"><div class="s-name">Music Production</div><div class="s-desc">Full songs built from scratch, arrangement through final bounce.</div></div>
+        <div class="service-row"><div class="s-name">Beat Making</div><div class="s-desc">Ready-to-license instrumentals across every genre in the catalog.</div></div>
+        <div class="service-row"><div class="s-name">Riddim Creation</div><div class="s-desc">Original riddims built for vocalists, sound systems, and Carnival season.</div></div>
+        <div class="service-row"><div class="s-name">Mixing</div><div class="s-desc">Your stems balanced, glued, and ready for release.</div></div>
+        <div class="service-row"><div class="s-name">Mastering</div><div class="s-desc">Final polish for streaming-ready loudness and clarity.</div></div>
+        <div class="service-row"><div class="s-name">Custom Instrumentals</div><div class="s-desc">A beat built around your reference, your key, your tempo.</div></div>
+        <div class="service-row"><div class="s-name">Sync Licensing</div><div class="s-desc">Cleared, ready-to-place tracks for film, TV, and ads.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" id="div4"></div>
+
+  <section class="catalog" id="catalog">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow" style="color:var(--gold);">The Catalog</div>
+        <h2>Fresh Off The Riddim Bank</h2>
+        <p class="catalog-sub">Lease a beat for your next release, or get in touch about exclusive rights.</p>
+      </div>
+      <div id="trackList" data-reveal></div>
+    </div>
+  </section>
+
+  <div class="divider" id="div5"></div>
+
+  <section class="platforms" id="listen">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow" style="color:var(--teal);">Listen</div>
+        <h2>Stream The Catalog Everywhere</h2>
+      </div>
+      <div class="platform-row" data-reveal>
+        <!-- Replace the href values below with your real Spotify / YouTube / Audiomack / Apple Music links -->
+        <a class="platform-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9.5c2.5-1 5.5-1 8 .5M8.5 12.5c2-.8 4.2-.8 6 .3M9.5 15.3c1.4-.5 2.8-.5 4 .2"/></svg>
+          Spotify
+        </a>
+        <a class="platform-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M9.5 9.5l5 2.5-5 2.5v-5z" fill="currentColor" stroke="none"/></svg>
+          YouTube
+        </a>
+        <a class="platform-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h3l2-7 4 14 2-9 2 4h5"/></svg>
+          Audiomack
+        </a>
+        <a class="platform-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+          Apple Music
+        </a>
+        <a class="platform-btn" href="https://www.instagram.com/selector.pie" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" id="div6"></div>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow" style="color:var(--magenta);">Get In Touch</div>
+        <h2>Book A Session</h2>
+        <p>Custom productions, riddim licensing, mixing and mastering, or sync placements, reach out and let's build the next one.</p>
+        <div class="cta-row">
+          <!-- Replace with a real contact email -->
+          <a class="btn btn-solid" href="mailto:hello@selectorpie.com">Email Selector Pie</a>
+          <a class="btn btn-ghost" href="https://www.instagram.com/selector.pie" target="_blank" rel="noopener noreferrer">DM on Instagram</a>
+        </div>
+        <div class="contact-quote">"Creating music that moves people, <span>from the Caribbean to the world.</span>" 🌎🎵</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="brand">Selector Pie</span>
+    <span class="footer-meta">© <span id="year"></span> Selector Pie · Trinidad &amp; Tobago</span>
+  </div>
+</footer>
+
+<script>
+  // ---------- Header scroll state ----------
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ---------- Mobile nav ----------
+  const menuToggle = document.getElementById('menuToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', () => mobilePanel.classList.toggle('open'));
+  mobilePanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobilePanel.classList.remove('open')));
+
+  // ---------- EQ bar generator (signature motif) ----------
+  const ACCENTS = ['#F2A93B', '#FF3D7F', '#28D9C8'];
+  function buildEQ(el, count){
+    el.innerHTML = '';
+    el.classList.add('eq');
+    for (let i = 0; i < count; i++){
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      const h = 20 + Math.random() * 80;
+      const dur = (0.9 + Math.random() * 1.1).toFixed(2);
+      const delay = (Math.random() * 1.2).toFixed(2);
+      bar.style.height = h + '%';
+      bar.style.background = ACCENTS[i % ACCENTS.length];
+      bar.style.animationDuration = dur + 's';
+      bar.style.animationDelay = delay + 's';
+      el.appendChild(bar);
+    }
+  }
+  buildEQ(document.getElementById('heroEq'), 60);
+  ['div1','div2','div3','div4','div5','div6'].forEach(id => buildEQ(document.getElementById(id), 80));
+
+  // ---------- Scroll reveal ----------
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window){
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in-view'); });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => obs.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+
+  // ---------- Catalog (placeholder tracks — swap in your real titles, BPM/key, and lease prices) ----------
+  const TRACKS = [
+    { title:'Mas Camp', genre:'Soca', bpm:130, key:'C min', length:'3:12' },
+    { title:'Yard Pressure', genre:'Dancehall', bpm:98, key:'F# min', length:'3:45' },
+    { title:'Jump Up', genre:'Bouyon', bpm:140, key:'G min', length:'2:58' },
+    { title:'Vexx', genre:'Shatta', bpm:105, key:'D min', length:'3:20' },
+    { title:'Savannah Lights', genre:'Caribbean Fusion', bpm:128, key:'A min', length:'4:01' },
+  ];
+  const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8V4z"/></svg>';
+  const pauseIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>';
+
+  const trackList = document.getElementById('trackList');
+  trackList.innerHTML = TRACKS.map((t, i) => `
+    <div class="track">
+      <span class="t-num">${String(i+1).padStart(2,'0')}</span>
+      <button class="t-play" data-index="${i}" aria-label="Preview ${t.title}">${playIcon}</button>
+      <div class="t-info">
+        <div class="t-title">${t.title}</div>
+        <div class="t-meta">${t.bpm} BPM · ${t.key} · ${t.length}</div>
+      </div>
+      <span class="t-genre">${t.genre}</span>
+      <div class="t-leases">
+        <span class="lease-btn">MP3 Lease — $24.99</span>
+        <span class="lease-btn">WAV Lease — $39.99</span>
+        <span class="lease-btn">Exclusive — $199.99</span>
+      </div>
+    </div>
+  `).join('');
+
+  let activeBtn = null;
+  trackList.querySelectorAll('.t-play').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (activeBtn && activeBtn !== btn){ activeBtn.classList.remove('playing'); activeBtn.innerHTML = playIcon; }
+      const isPlaying = btn.classList.toggle('playing');
+      btn.innerHTML = isPlaying ? pauseIcon : playIcon;
+      activeBtn = isPlaying ? btn : null;
+      // Note: this toggles a visual "now playing" state only.
+      // Wire this up to real audio previews once track files are ready.
+    });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
